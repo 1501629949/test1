@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.bwf.study.dao.FilmRegionMapper">
+  <resultMap id="BaseResultMap" type="org.bwf.study.model.FilmRegion">
+    <id column="film_re_id" jdbcType="INTEGER" property="filmReId" />
+    <result column="film_re_name" jdbcType="VARCHAR" property="filmReName" />
+    <result column="film_re_enable" jdbcType="TINYINT" property="filmReEnable" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    film_re_id, film_re_name, film_re_enable
+  </sql>
+  <select id="selectByExample" parameterType="org.bwf.study.model.FilmRegionExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from film_region
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from film_region
+    where film_re_id = #{filmReId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from film_region
+    where film_re_id = #{filmReId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.bwf.study.model.FilmRegionExample">
+    delete from film_region
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.bwf.study.model.FilmRegion">
+    insert into film_region (film_re_id, film_re_name, film_re_enable
+      )
+    values (#{filmReId,jdbcType=INTEGER}, #{filmReName,jdbcType=VARCHAR}, #{filmReEnable,jdbcType=TINYINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.bwf.study.model.FilmRegion">
+    insert into film_region
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="filmReId != null">
+        film_re_id,
+      </if>
+      <if test="filmReName != null">
+        film_re_name,
+      </if>
+      <if test="filmReEnable != null">
+        film_re_enable,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="filmReId != null">
+        #{filmReId,jdbcType=INTEGER},
+      </if>
+      <if test="filmReName != null">
+        #{filmReName,jdbcType=VARCHAR},
+      </if>
+      <if test="filmReEnable != null">
+        #{filmReEnable,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.bwf.study.model.FilmRegionExample" resultType="java.lang.Long">
+    select count(*) from film_region
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update film_region
+    <set>
+      <if test="record.filmReId != null">
+        film_re_id = #{record.filmReId,jdbcType=INTEGER},
+      </if>
+      <if test="record.filmReName != null">
+        film_re_name = #{record.filmReName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filmReEnable != null">
+        film_re_enable = #{record.filmReEnable,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update film_region
+    set film_re_id = #{record.filmReId,jdbcType=INTEGER},
+      film_re_name = #{record.filmReName,jdbcType=VARCHAR},
+      film_re_enable = #{record.filmReEnable,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.bwf.study.model.FilmRegion">
+    update film_region
+    <set>
+      <if test="filmReName != null">
+        film_re_name = #{filmReName,jdbcType=VARCHAR},
+      </if>
+      <if test="filmReEnable != null">
+        film_re_enable = #{filmReEnable,jdbcType=TINYINT},
+      </if>
+    </set>
+    where film_re_id = #{filmReId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.bwf.study.model.FilmRegion">
+    update film_region
+    set film_re_name = #{filmReName,jdbcType=VARCHAR},
+      film_re_enable = #{filmReEnable,jdbcType=TINYINT}
+    where film_re_id = #{filmReId,jdbcType=INTEGER}
+  </update>
+</mapper>

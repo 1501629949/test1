@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.bwf.study.dao.CommentMapper">
+  <resultMap id="BaseResultMap" type="org.bwf.study.model.Comment">
+    <id column="cmmt_id" jdbcType="INTEGER" property="cmmtId" />
+    <result column="cmmt_desc" jdbcType="VARCHAR" property="cmmtDesc" />
+    <result column="cmmt_score" jdbcType="TINYINT" property="cmmtScore" />
+    <result column="cmmt_createtime" jdbcType="VARCHAR" property="cmmtCreatetime" />
+    <result column="cmmt_good" jdbcType="INTEGER" property="cmmtGood" />
+    <result column="cust_id" jdbcType="INTEGER" property="custId" />
+    <result column="cust_name" jdbcType="VARCHAR" property="custName" />
+    <result column="cust_avat" jdbcType="VARCHAR" property="custAvat" />
+    <result column="film_id" jdbcType="INTEGER" property="filmId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    cmmt_id, cmmt_desc, cmmt_score, cmmt_createtime, cmmt_good, cust_id, cust_name, cust_avat, 
+    film_id
+  </sql>
+  <select id="selectByExample" parameterType="org.bwf.study.model.CommentExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from comment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from comment
+    where cmmt_id = #{cmmtId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from comment
+    where cmmt_id = #{cmmtId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.bwf.study.model.CommentExample">
+    delete from comment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.bwf.study.model.Comment">
+    insert into comment (cmmt_id, cmmt_desc, cmmt_score, 
+      cmmt_createtime, cmmt_good, cust_id, 
+      cust_name, cust_avat, film_id
+      )
+    values (#{cmmtId,jdbcType=INTEGER}, #{cmmtDesc,jdbcType=VARCHAR}, #{cmmtScore,jdbcType=TINYINT}, 
+      #{cmmtCreatetime,jdbcType=VARCHAR}, #{cmmtGood,jdbcType=INTEGER}, #{custId,jdbcType=INTEGER}, 
+      #{custName,jdbcType=VARCHAR}, #{custAvat,jdbcType=VARCHAR}, #{filmId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.bwf.study.model.Comment">
+    insert into comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cmmtId != null">
+        cmmt_id,
+      </if>
+      <if test="cmmtDesc != null">
+        cmmt_desc,
+      </if>
+      <if test="cmmtScore != null">
+        cmmt_score,
+      </if>
+      <if test="cmmtCreatetime != null">
+        cmmt_createtime,
+      </if>
+      <if test="cmmtGood != null">
+        cmmt_good,
+      </if>
+      <if test="custId != null">
+        cust_id,
+      </if>
+      <if test="custName != null">
+        cust_name,
+      </if>
+      <if test="custAvat != null">
+        cust_avat,
+      </if>
+      <if test="filmId != null">
+        film_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cmmtId != null">
+        #{cmmtId,jdbcType=INTEGER},
+      </if>
+      <if test="cmmtDesc != null">
+        #{cmmtDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="cmmtScore != null">
+        #{cmmtScore,jdbcType=TINYINT},
+      </if>
+      <if test="cmmtCreatetime != null">
+        #{cmmtCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="cmmtGood != null">
+        #{cmmtGood,jdbcType=INTEGER},
+      </if>
+      <if test="custId != null">
+        #{custId,jdbcType=INTEGER},
+      </if>
+      <if test="custName != null">
+        #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="custAvat != null">
+        #{custAvat,jdbcType=VARCHAR},
+      </if>
+      <if test="filmId != null">
+        #{filmId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.bwf.study.model.CommentExample" resultType="java.lang.Long">
+    select count(*) from comment
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update comment
+    <set>
+      <if test="record.cmmtId != null">
+        cmmt_id = #{record.cmmtId,jdbcType=INTEGER},
+      </if>
+      <if test="record.cmmtDesc != null">
+        cmmt_desc = #{record.cmmtDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cmmtScore != null">
+        cmmt_score = #{record.cmmtScore,jdbcType=TINYINT},
+      </if>
+      <if test="record.cmmtCreatetime != null">
+        cmmt_createtime = #{record.cmmtCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cmmtGood != null">
+        cmmt_good = #{record.cmmtGood,jdbcType=INTEGER},
+      </if>
+      <if test="record.custId != null">
+        cust_id = #{record.custId,jdbcType=INTEGER},
+      </if>
+      <if test="record.custName != null">
+        cust_name = #{record.custName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.custAvat != null">
+        cust_avat = #{record.custAvat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filmId != null">
+        film_id = #{record.filmId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update comment
+    set cmmt_id = #{record.cmmtId,jdbcType=INTEGER},
+      cmmt_desc = #{record.cmmtDesc,jdbcType=VARCHAR},
+      cmmt_score = #{record.cmmtScore,jdbcType=TINYINT},
+      cmmt_createtime = #{record.cmmtCreatetime,jdbcType=VARCHAR},
+      cmmt_good = #{record.cmmtGood,jdbcType=INTEGER},
+      cust_id = #{record.custId,jdbcType=INTEGER},
+      cust_name = #{record.custName,jdbcType=VARCHAR},
+      cust_avat = #{record.custAvat,jdbcType=VARCHAR},
+      film_id = #{record.filmId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.bwf.study.model.Comment">
+    update comment
+    <set>
+      <if test="cmmtDesc != null">
+        cmmt_desc = #{cmmtDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="cmmtScore != null">
+        cmmt_score = #{cmmtScore,jdbcType=TINYINT},
+      </if>
+      <if test="cmmtCreatetime != null">
+        cmmt_createtime = #{cmmtCreatetime,jdbcType=VARCHAR},
+      </if>
+      <if test="cmmtGood != null">
+        cmmt_good = #{cmmtGood,jdbcType=INTEGER},
+      </if>
+      <if test="custId != null">
+        cust_id = #{custId,jdbcType=INTEGER},
+      </if>
+      <if test="custName != null">
+        cust_name = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="custAvat != null">
+        cust_avat = #{custAvat,jdbcType=VARCHAR},
+      </if>
+      <if test="filmId != null">
+        film_id = #{filmId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where cmmt_id = #{cmmtId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.bwf.study.model.Comment">
+    update comment
+    set cmmt_desc = #{cmmtDesc,jdbcType=VARCHAR},
+      cmmt_score = #{cmmtScore,jdbcType=TINYINT},
+      cmmt_createtime = #{cmmtCreatetime,jdbcType=VARCHAR},
+      cmmt_good = #{cmmtGood,jdbcType=INTEGER},
+      cust_id = #{custId,jdbcType=INTEGER},
+      cust_name = #{custName,jdbcType=VARCHAR},
+      cust_avat = #{custAvat,jdbcType=VARCHAR},
+      film_id = #{filmId,jdbcType=INTEGER}
+    where cmmt_id = #{cmmtId,jdbcType=INTEGER}
+  </update>
+</mapper>

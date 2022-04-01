@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.bwf.study.dao.RegionsMapper">
+  <resultMap id="BaseResultMap" type="org.bwf.study.model.Regions">
+    <id column="region_id" jdbcType="INTEGER" property="regionId" />
+    <result column="region_name" jdbcType="VARCHAR" property="regionName" />
+    <result column="region_parentid" jdbcType="INTEGER" property="regionParentid" />
+    <result column="region_enable" jdbcType="TINYINT" property="regionEnable" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    region_id, region_name, region_parentid, region_enable
+  </sql>
+  <select id="selectByExample" parameterType="org.bwf.study.model.RegionsExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from regions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from regions
+    where region_id = #{regionId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from regions
+    where region_id = #{regionId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.bwf.study.model.RegionsExample">
+    delete from regions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.bwf.study.model.Regions">
+    insert into regions (region_id, region_name, region_parentid, 
+      region_enable)
+    values (#{regionId,jdbcType=INTEGER}, #{regionName,jdbcType=VARCHAR}, #{regionParentid,jdbcType=INTEGER}, 
+      #{regionEnable,jdbcType=TINYINT})
+  </insert>
+  <insert id="insertSelective" parameterType="org.bwf.study.model.Regions">
+    insert into regions
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="regionId != null">
+        region_id,
+      </if>
+      <if test="regionName != null">
+        region_name,
+      </if>
+      <if test="regionParentid != null">
+        region_parentid,
+      </if>
+      <if test="regionEnable != null">
+        region_enable,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="regionId != null">
+        #{regionId,jdbcType=INTEGER},
+      </if>
+      <if test="regionName != null">
+        #{regionName,jdbcType=VARCHAR},
+      </if>
+      <if test="regionParentid != null">
+        #{regionParentid,jdbcType=INTEGER},
+      </if>
+      <if test="regionEnable != null">
+        #{regionEnable,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.bwf.study.model.RegionsExample" resultType="java.lang.Long">
+    select count(*) from regions
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update regions
+    <set>
+      <if test="record.regionId != null">
+        region_id = #{record.regionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.regionName != null">
+        region_name = #{record.regionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.regionParentid != null">
+        region_parentid = #{record.regionParentid,jdbcType=INTEGER},
+      </if>
+      <if test="record.regionEnable != null">
+        region_enable = #{record.regionEnable,jdbcType=TINYINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update regions
+    set region_id = #{record.regionId,jdbcType=INTEGER},
+      region_name = #{record.regionName,jdbcType=VARCHAR},
+      region_parentid = #{record.regionParentid,jdbcType=INTEGER},
+      region_enable = #{record.regionEnable,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.bwf.study.model.Regions">
+    update regions
+    <set>
+      <if test="regionName != null">
+        region_name = #{regionName,jdbcType=VARCHAR},
+      </if>
+      <if test="regionParentid != null">
+        region_parentid = #{regionParentid,jdbcType=INTEGER},
+      </if>
+      <if test="regionEnable != null">
+        region_enable = #{regionEnable,jdbcType=TINYINT},
+      </if>
+    </set>
+    where region_id = #{regionId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.bwf.study.model.Regions">
+    update regions
+    set region_name = #{regionName,jdbcType=VARCHAR},
+      region_parentid = #{regionParentid,jdbcType=INTEGER},
+      region_enable = #{regionEnable,jdbcType=TINYINT}
+    where region_id = #{regionId,jdbcType=INTEGER}
+  </update>
+</mapper>
